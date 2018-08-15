@@ -1,7 +1,13 @@
   // TODO: Your code here
 var http = require('http');
 var assert = require('assert');
+let chai = require('chai');
+let chaiHttp = require('chai-http');
 var server = require('../server/index.js');
+let should = chai.should();
+let Cat = require('../database/index.js')
+
+	chai.use(chaiHttp);
 
 	describe('Array', function() {
 	  describe('#indexOf()', function() {
@@ -63,8 +69,26 @@ var server = require('../server/index.js');
 	  });
 	});
 
-	
 
+
+	describe('Cats', () => {
+
+  	describe('/GET book', () => {
+      it('it should GET all the books', (done) => {
+        chai.request(server)
+            .get('/cats')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('array');
+                res.body.length.should.be.eql(0);
+              done();
+            });
+            done();
+      });
+
+  });
+
+});
 
 
 
