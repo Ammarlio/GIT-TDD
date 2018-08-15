@@ -9,26 +9,10 @@ let Cat = require('../database/index.js')
 
 	chai.use(chaiHttp);
 
-	describe('Array', function() {
-	  describe('#indexOf()', function() {
-	    it('should return -1 when the value is not present', function() {
-	      assert.equal([1,2,3].indexOf(4), -1);
-	    });
-	  });
-	});
-
-// 	describe('/', function () {
-//   it('should return 200', function (done) {
-//     http.get('http://localhost:1128', function (res) {
-//       assert.equal(200, res.statusCode);
-//       done();
-//     });
-//   });
-// })
 
 	this.server = http.createServer(function (req, res) {
-	  res.writeHead(200, { 'Content-Type': 'text/plain' });
-	  res.end('Hello, world!\n');
+	  res.writeHead(200, { 'Content-Type': 'json/application' });
+	  res.end();
 	});
 
 	exports.listen = function () {
@@ -59,36 +43,59 @@ let Cat = require('../database/index.js')
 	    });
 	  });
 
-	  it('should say "Hello, world!"', function (done) {
-	    http.get('http://localhost:1128', function (res) {
-	      res.on('end', function () {
-	        assert.equal('Hello, world!\n');
-	      });
-	    });
-	    done();
-	  });
+	  // it('should say "Hello, world!"', function (done) {
+	  //   http.get('http://localhost:1128', function (res) {
+	  //     res.on('end', function () {
+	  //       assert.equal('Hello, world!\n');
+	  //     });
+	  //   });
+	  //   done();
+	  // });
 	});
 
 
 
 	describe('Cats', () => {
 
-  	describe('/GET book', () => {
-      it('it should GET all the books', (done) => {
-        chai.request(server)
-            .get('/cats')
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
-              done();
-            });
-            done();
-      });
+	  	describe('/GET book', () => {
+	      it('it should GET all the books', (done) => {
+	        chai.request(server)
+	            .get('/cats')
+	            .end((err, res) => {
+	                res.should.have.status(200);
+	                res.body.should.be.a('array');
+	                res.body.length.should.be.eql(0);
+	         		done();
+	            });     
+	      });
 
-  });
+	  	});
 
-});
+	  	describe('/POST cat', () => {
+	        it('it should not POST a book without pages field', (done) => {
+		        let cat = {
+		            catName : "caty",
+		            ownerEmail : "3ogla@gmail.com",
+		            imageUrl : "https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg",
+		            adoptionMessage : "Shit!" 
+		        }
+		        chai.request(server)
+		            .post('/cats')
+		            .send(cat)
+		            .end((err, res) => {
+		                res.should.have.status(200);
+		                res.body.should.be.a('object');
+		                res.body.should.have.property('errors');
+		                res.body.errors.should.have.property('pages');
+		                res.body.errors.pages.should.have.property('kind').eql('required');
+		              done();
+		            });
+		          done();   
+	        });
+
+	   });
+
+	});
 
 
 
