@@ -21,16 +21,31 @@ app.get('/cats', function (req, res) {
 
 app.post('/cats', function (req, res) {
   // TODO - your code here!
-  
+  	var obj = {
+  		catName : req.body.catName,
+  		ownerEmail : req.body.ownerEmail,
+  		imageUrl : req.body.imageUrl,
+  		adoptionMessage : req.body.adoptionMessage
+
+  	}
+    db.save(obj,function(err,data){
+    	if(err) throw err
+    		else{
+    			res.send(data)
+    		}
+    })
+ 
 })
 
 
 
-let port = 1128;
+if(!module.parent) {
 
-app.listen(port, function() {
-  console.log(`listening on port ${port}`);
-});
+  var port = 1128;
+  app.listen(port, () => {
+  console.log("Listening at http:/localhost:" + port );
+  });
+}
 module.exports = app
 
 
