@@ -10,7 +10,13 @@ app.use(express.static(path.join(__dirname, '../angular-client/')));
 app.get('/cats', function (req, res) {
   // TODO - your code here!
   
-
+  db.Cat.find({},function(err,data){
+  	if(err) {
+  		res.send(err)
+  	} else {
+  		res.send(data)
+  	}
+  })
 });
 
 app.post('/cats', function (req, res) {
