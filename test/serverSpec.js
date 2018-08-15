@@ -58,7 +58,7 @@ let Cat = require('../database/index.js')
 	describe('Cats', () => {
 
 	  	describe('/GET book', () => {
-	      it('it should GET all the books', (done) => {
+	      it('it should GET all the cats', (done) => {
 	        chai.request(server)
 	            .get('/cats')
 	            .end((err, res) => {

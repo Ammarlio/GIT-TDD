@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma test",
+    "test": "karma start",
     "test1": "mocha",
     "start": "nodemon server/index.js"
   },
@@ -13,6 +13,7 @@
   "dependencies": {
     "angular": "^1.6.10",
     "angular-mocks": "^1.7.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
@@ -30,5 +31,8 @@
     "router": "^1.3.2",
     "sinon": "^6.1.4",
     "sinon-mongoose": "^2.2.1"
+  },
+  "devDependencies": {
+    "@angular/cli": "^6.1.3"
   }
 }
